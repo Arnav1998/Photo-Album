@@ -31,7 +31,7 @@ public class CreateAlbum extends HttpServlet {
         out.println("<html lang=\"en\">");
         out.println("<head>");
         out.println("    <meta charset=\"UTF-8\">");
-        out.println("    <title>Document</title>");
+        out.println("    <title>Create Album</title>");
         out.println("    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">");
         out.println("</head>");
         out.println("<body>");

@@ -31,7 +31,7 @@ public class AlbumPage extends HttpServlet {
         out.println("<html lang=\"en\">");
         out.println("<head>");
         out.println("    <meta charset=\"UTF-8\">");
-        out.println("    <title>Document</title>");
+        out.println("    <title>"+request.getParameter("albumName")+"</title>");
         out.println("    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">");
         out.println("</head>");
         out.println("<body>");
@@ -61,10 +61,27 @@ public class AlbumPage extends HttpServlet {
 				//display contents of album
 				List<Image> images = album.getPhotos();
 				
+                out.println("<div class=\"row\">");
+				
 				for (Image img: images) {
-//					System.out.println(img.getImagePath());
-					out.println("<a href=\"ImageView?imgPath="+img.getImagePath()+"\"><img src=\""+img.getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\"></a>");
+					
+					if (!img.getImagePath().contains(".txt")) {
+					
+		        		out.println("<a href=\"ImageView?imgPath="+img.getImagePath()+"\" class=\"col\">");
+		            	out.println("	<figure class=\"figure\">");
+		                out.println("		<img src=\"ImageView?imgPath="+img.getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\" style=\"width:300px;height:300px;\">");
+		                //out.println("		<img src=\"resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
+		                
+		            	out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteImage?imgPath="+img.getImagePath()+"&albumName="+albumName+"\">Delete</a> | <a href=\"DownloadImage?imgPath="+img.getImagePath()+"\">Download</a></figcaption>");
+	//	                out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteAlbum?albumName="+albums.get(i).getName()+"\">Delete Album</a></figcaption>");
+		                out.println("	</figure>");
+		                out.println("</a>");
+					}
+	                
+					//out.println("<a href=\"ImageView?imgPath="+img.getImagePath()+"\"><img src=\""+img.getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\"></a>");
 				}
+				
+                out.println("</div>");
 				
 				//give option to upload images to album
 				out.println("<h3 class=\"mt-5 mb-3\">Add An Image</h3>");

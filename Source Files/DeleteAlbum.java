@@ -35,10 +35,13 @@ public class DeleteAlbum extends HttpServlet {
 		File albumFile = new File(getServletContext().getRealPath( "/WEB-INF/uploads/"+albumName));
 	
 		String[]entries = albumFile.list();
-		for(String s: entries){
+		
+		if (entries!=null) {
+			for(String s: entries){
 			
-		    File currentFile = new File(albumFile.getPath(),s);
-		    currentFile.delete();
+				File currentFile = new File(albumFile.getPath(),s);
+				currentFile.delete();
+			}
 		}
 		
 		albumFile.delete();

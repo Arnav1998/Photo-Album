@@ -72,8 +72,8 @@ public class Upload extends HttpServlet {
                     item.write( file );
                     
                     
-                    Image img = new Image("file://"+fileDir+"/"+fileName);
-                    //Image img = new Image(fileDir+"/"+fileName);
+                    //Image img = new Image("file://"+fileDir+"/"+fileName);
+                    Image img = new Image(fileDir+"/"+fileName);
                     
                     for (PhotoAlbum album: albums) {
                     	if (album.getName().equals(albumName)) {

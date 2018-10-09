@@ -45,6 +45,8 @@ public class DeleteImage extends HttpServlet {
 		this.getServletContext().setAttribute("albumList", albums);
         
         imgFile.delete();
+        
+        response.sendRedirect("AlbumPage?albumName="+request.getParameter("albumName"));
 		
 	}
 
