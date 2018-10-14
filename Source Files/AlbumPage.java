@@ -57,28 +57,25 @@ public class AlbumPage extends HttpServlet {
         
 
 		for(PhotoAlbum album: albums) {
-			if (album.getName().equals(albumName)) {
-				//display contents of album
+			if (album.getName().equals(albumName)) { //display contents of album
+
 				List<Image> images = album.getPhotos();
 				
-                out.println("<div class=\"row\">");
+				out.println("<div class=\"row text-center text-lg-left\">");
 				
 				for (Image img: images) {
 					
 					if (!img.getImagePath().contains(".txt")) {
-					
+						out.println("<div class=\"row\">");
 		        		out.println("<a href=\"ImageView?imgPath="+img.getImagePath()+"\" class=\"col\">");
 		            	out.println("	<figure class=\"figure\">");
 		                out.println("		<img src=\"ImageView?imgPath="+img.getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\" style=\"width:300px;height:300px;\">");
-		                //out.println("		<img src=\"resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
-		                
 		            	out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteImage?imgPath="+img.getImagePath()+"&albumName="+albumName+"\">Delete</a> | <a href=\"DownloadImage?imgPath="+img.getImagePath()+"\">Download</a></figcaption>");
-	//	                out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteAlbum?albumName="+albums.get(i).getName()+"\">Delete Album</a></figcaption>");
 		                out.println("	</figure>");
 		                out.println("</a>");
+		                out.println("</div>");
 					}
 	                
-					//out.println("<a href=\"ImageView?imgPath="+img.getImagePath()+"\"><img src=\""+img.getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\"></a>");
 				}
 				
                 out.println("</div>");
@@ -96,6 +93,7 @@ public class AlbumPage extends HttpServlet {
 		}
         
 
+		out.println("<a href=\"albums\" class=\"btn btn-primary mt-5\">Back</a>");
         
         out.println("</div>");
         out.println("</body>");

@@ -36,43 +36,27 @@ public class Upload extends HttpServlet {
 		String albumName = request.getParameter("albumName");
 		@SuppressWarnings("unchecked")
 		List<PhotoAlbum> albums = (ArrayList<PhotoAlbum>) this.getServletContext().getAttribute("albumList");
-		// Create a factory for disk-based file items
+
         DiskFileItemFactory factory = new DiskFileItemFactory();
 
-        // Configure a repository (to ensure a secure temp location is used)
-        ServletContext servletContext = this.getServletConfig()
-            .getServletContext();
-        File repository = (File) servletContext
-            .getAttribute( "javax.servlet.context.tempdir" );
+        ServletContext servletContext = this.getServletConfig().getServletContext();
+        File repository = (File) servletContext.getAttribute( "javax.servlet.context.tempdir" );
         factory.setRepository( repository );
 
-        // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload( factory );
 
-        // The directory we want to save the uploaded files to.
         String fileDir = getServletContext().getRealPath( "/WEB-INF/uploads/"+albumName);
 
-        // Parse the request
-        try
-        {
+        try {
             List<FileItem> items = upload.parseRequest( request );
-            for( FileItem item : items )
-            {
-                // If the item is not a form field - meaning it's an uploaded
-                // file, we save it to the target dir
-                if( !item.isFormField() )
-                {
-                    // item.getName() will return the full path of the uploaded
-                    // file, e.g. "C:/My Documents/files/test.txt", but we only
-                    // want the file name part, which is why we first create a
-                    // File object, then use File.getName() to get the file
-                    // name.
+            for( FileItem item : items ) {
+
+                if( !item.isFormField() ) {
+
                     String fileName = (new File( item.getName() )).getName();
                     File file = new File( fileDir, fileName );
                     item.write( file );
-                    
-                    
-                    //Image img = new Image("file://"+fileDir+"/"+fileName);
+
                     Image img = new Image(fileDir+"/"+fileName);
                     
                     for (PhotoAlbum album: albums) {
@@ -86,8 +70,7 @@ public class Upload extends HttpServlet {
             }
 
         }
-        catch( Exception e )
-        {
+        catch( Exception e ) {
             throw new IOException( e );
         }
         

@@ -36,9 +36,8 @@ public class MainPage extends HttpServlet {
 			String dirPath = getServletContext().getRealPath( "/WEB-INF/uploads" );
 			File dir = new File(dirPath);
 			File[] folders = dir.listFiles();
-			if (folders == null || folders.length == 0) {
-			    System.out.println("The directory is empty");
-			} else {
+			if (!(folders == null || folders.length == 0)) {
+			    
 			    for (File folder : folders) {
 
 			        albums.add(new PhotoAlbum(folder.getName(),""));
@@ -63,12 +62,10 @@ public class MainPage extends HttpServlet {
 					        				album.setDescription(description);
 					        				
 										} catch (FileNotFoundException e) {
-											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
 
 				        			}
-//				        			album.addImage(new Image("file://"+file.getAbsolutePath()));
 				        			album.addImage(new Image(file.getAbsolutePath()));
 				        		}
 				        	}
@@ -104,19 +101,13 @@ public class MainPage extends HttpServlet {
         out.println("</nav>");
         
         out.println("<div class=\"container\">");
-          
-       // out.println("<h1 class=\"my-4 text-center text-lg-left\">Photo Albums</h1>");
         
         if (albums.size()==0) { //if no albums exists, give user the option to create one
         	
         	out.println("	<figure class=\"figure\">");
             out.println("		<img src=\"../resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
-        	//out.println("		<img src=\"resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
             out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"CreateAlbum\">Create Album</a></figcaption>");
-//            out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteAlbum?albumName="+albums.get(i).getName()+"\">Delete Album</a></figcaption>");
             out.println("	</figure>");
-        	
-        	//out.println("<a href=\"CreateAlbum\">Create Album</a>");
         	
         } else { //Populate the page if existing albums, if they exist
         	
@@ -126,11 +117,12 @@ public class MainPage extends HttpServlet {
                 out.println("<div class=\"row\">");
         		out.println("<a href=\"AlbumPage?albumName="+albums.get(i).getName()+"\"class=\"col\">");
             	out.println("	<figure class=\"figure\">");
-                out.println("		<img src=\"../resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
-                //out.println("		<img src=\"resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\">");
-                
+            	if (albums.get(i).getPhotos()!=null && albums.get(i).getPhotos().size()>0) {
+            		out.println("		<img src=\"ImageView?imgPath="+albums.get(i).getPhotos().get(0).getImagePath()+"\" class=\"img-thumbnail figure-img img-fluid rounded\" style=\"width: 300px; height: 300px\">");
+            	} else {
+            		out.println("		<img src=\"../resources/photoAlbumImage.jpg\" class=\"img-thumbnail figure-img img-fluid rounded\" style=\"width: 300px; height: 300px\">");
+            	}
             	out.println("		<figcaption class=\"figure-caption text-center\">"+albums.get(i).getName()+" |<a href=\"DeleteAlbum?albumName="+albums.get(i).getName()+"\">Delete Album</a>"+"</figcaption>");
-//                out.println("		<figcaption class=\"figure-caption text-center\"><a href=\"DeleteAlbum?albumName="+albums.get(i).getName()+"\">Delete Album</a></figcaption>");
                 out.println("	</figure>");
                 out.println("</a>");
                 out.println("</div>");
@@ -143,9 +135,7 @@ public class MainPage extends HttpServlet {
         	out.println("<a href=\"CreateAlbum\"class=\"btn btn-primary\">Create Album</a>");
         
         }
-        
-
-        
+ 
         out.println("</div>");
         out.println("</body>");
         out.println("</html>"); 

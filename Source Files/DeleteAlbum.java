@@ -30,7 +30,6 @@ public class DeleteAlbum extends HttpServlet {
 		}
 		
 		this.getServletContext().setAttribute("albumList", albums);
-		//System.out.println(getServletContext().getRealPath( "/WEB-INF/uploads/"+albumName));
 		
 		File albumFile = new File(getServletContext().getRealPath( "/WEB-INF/uploads/"+albumName));
 	
